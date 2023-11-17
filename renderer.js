@@ -196,6 +196,7 @@ document.getElementById("eliminar").addEventListener("click", function () {
   const eliminar = confirm("¿Esta seguro de eliminar la cuenta?");
   if (eliminar) {
     deleteLocalSession();
+    sleepES5(2000)
     ralert(
       "Cuenta eliminada \n Recuerde que al eliminar la cuenta tambien tendria que eliminarlo de su dispositivo vinculado"
     );

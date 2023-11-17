@@ -1,8 +1,7 @@
-const app =require('electron')
-function ralert(contenido){
-alert(contenido);
-app.reloadIgnoringCache();
+function ralert(contenido) {
+  alert(contenido);
+  window.location.reload();
 }
-module.exports ={
-    ralert
-}
+module.exports = {
+  ralert,
+};
