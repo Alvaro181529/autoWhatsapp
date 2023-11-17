@@ -1,0 +1,9 @@
+
+# Ignora la carpeta node_modules
+node_modules
+# Ignora la carpeta .wwebjs_auth
+.wwebjs_auth
+# Ignora la ruta .wwebjs_cache
+.wwebjs_cache
+#Ignora la ruta package-lock.json
+package-lock.json

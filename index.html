@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com;"
+    />
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script defer type="module" src="renderer.js"></script>
+
+    <title>Automatizacion</title>
+  </head>
+  <body>
+    <header>
+      <h1>Connection status: <strong id="status"></strong></h1>
+    </header>
+    <main>
+      <hr />
+      <input type="button" id="eliminar" value="eliminar cuenta" />
+      <hr />
+      <h4>Aca estra el qr</h4>
+      <div id="qrcode"></div>
+      <input type="button" id="generar" value="generar qr">
+      <hr />
+      <section>
+        <input type="file" name="excel" id="fileUpload" accept=".xls,.xlsx" />
+        <button type="button" id="uploadExcel">Aceptar</button>
+        <a id="jsonData"></a>
+        <hr />
+        <h5>si se puede avca estara la imagen</h5>
+        <!-- viualizar imagen si es que se puede agregar -->
+      </section>
+      <hr />
+      <article>
+        <textarea
+          style="width: 60em; height: 10em"
+          id="mensajetxt"
+          placeholder="en aca se aceptan los mensajes"
+        ></textarea>
+      </article>
+      <hr />
+      <section>
+        <input
+          type="number"
+          name="cantidad"
+          id="cantidad"
+          placeholder="cantidad de mmensajes para enviar"
+        />
+        <input
+          type="number"
+          name="tiempo"
+          id="tiempo"
+          placeholder="intervalo por tiempo de envio de mensajes"
+        />
+        <input
+          type="number"
+          name="cantidad"
+          id="espera"
+          placeholder="por cada catidad cuanto tiempo espera"
+        />
+      </section>
+      <hr />
+      <input type="button" id="enviar" value="enviar" />
+    </main>
+  </body>
+</html>
