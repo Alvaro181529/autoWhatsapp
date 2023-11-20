@@ -3,6 +3,8 @@
 //jugar con el tiempo
 //las palabras ambos X
 //pueden hacer de manera randomica /
+//mostrar la lista de envidaos 
+//hacer que se pueda editar las palabras
 //--------------------------------------------
 const {
   startAPI,
