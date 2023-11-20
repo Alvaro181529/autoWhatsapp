@@ -5,8 +5,9 @@
 //pueden hacer de manera randomica               |/
 //mostrar la lista de envidados                  |X
 //validacion de numeros                          |X
-//hacer que se pueda editar fraces randomicas    |/
-//actualizar pagina                              |/
+//hacer que se pueda editar fraces randomicas    |
+//actualizar pagina                              |
+//SE ECONTRO UN ERROR EL ENVIO ES DE INMEDIATO   |
 //--------------------------------------------
 const { startAPI, messageSend, deleteLocalSession } = require("./api.js");
 const { updateOnlineStatus } = require("./status.js");
@@ -152,14 +153,14 @@ function envioMensaje(cliente) {
       let n = 1 + o;
       if (m == cantidad) {
         console.log("funcion send (Espera)");
-        // messageSend(cliente, phone, mensaje);
+        //messageSend(cliente, phone, mensaje);
         console.log(cliente, phone, mensaje);
         datosTabla(n, nameItem, cliente, phone, mensaje);
         sleepES5(espera);
         m = -1;
       } else {
         console.log("funcion send (Tiempo)");
-        //  messageSend(cliente, phone, mensaje);
+        //messageSend(cliente, phone, mensaje);
         console.log(cliente, phone, mensaje);
         datosTabla(n, nameItem, cliente, phone, mensaje);
         sleepES5(tiempo);
@@ -202,16 +203,16 @@ function datosTabla(n, celular, cliente, phone, mensaje) {
     if (cantidadDigitos == 8) {
       estado = `Enviado`;
       descripcion = `El número es correcto.`;
-      messageSend(cliente, phone, mensaje);
+      // messageSend(cliente, phone, mensaje);
     } else if (cantidadDigitos > 8) {
-      estado = `El número es incorrecto. Tiene más de 8 dígitos.`;
+      estado = `No enviado`;
       descripcion = `El número es incorrecto. Tiene más de 8 dígitos.`;
     } else {
-      estado = `El número es incorrecto. Tiene menos de 7 dígitos.`;
+      estado = `No enviado`;
       descripcion = `El número es incorrecto. Tiene menos de 7 dígitos.`;
     }
   } else {
-    estado = "no es un número.";
+    estado = "No es un número.";
   }
   tableBody.innerHTML += `<tr>${
     "<td>" +
