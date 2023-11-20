@@ -1,18 +1,16 @@
 //--------------------------------------------
 //       Referenciar contenidos
-//jugar con el tiempo
-//las palabras ambos X
-//pueden hacer de manera randomica /
-//mostrar la lista de envidaos 
-//hacer que se pueda editar las palabras
+//jugar con el tiempo                            |
+//las palabras ambos                             |X
+//pueden hacer de manera randomica               |/
+//mostrar la lista de envidados                  |X
+//validacion de numeros                          |X
+//hacer que se pueda editar fraces randomicas    |/
+//actualizar pagina                              |/
 //--------------------------------------------
-const {
-  startAPI,
-  messageSend,
-  deleteLocalSession,
-  } = require("./api.js");
+const { startAPI, messageSend, deleteLocalSession } = require("./api.js");
 const { updateOnlineStatus } = require("./status.js");
-const {ralert} =require('./refrescar.js')
+const { ralert } = require("./refrescar.js");
 const XLSX = require("xlsx");
 
 updateOnlineStatus();
@@ -119,8 +117,7 @@ function obtenerFraseAleatoria() {
   const indiceAleatorio = Math.floor(Math.random() * frasesAleatorias.length);
   return frasesAleatorias[indiceAleatorio];
 }
-
-// Ejemplo de cómo usar la función para obtener una frase aleatoria
+//--------------------------------------------
 
 men.addEventListener("input", function () {
   message = men.value;
@@ -140,26 +137,31 @@ can.addEventListener("input", function () {
 });
 
 //--------------------------------------------
-//       Envio de mensajes
+//       Inicio de Cliente y Recorrido del Array de Numeros
 //--------------------------------------------
 
 function envioMensaje(cliente) {
-  m = 0;
-  o = 0;
   try {
+    m = 0;
+    o = 0;
     allJSONObjects.forEach((objeto) => {
       let nameItem = objeto[name_item];
+      const fraseAleatoria = obtenerFraseAleatoria();
+      const phone = code + nameItem + "@c.us";
+      const mensaje = message + " " + fraseAleatoria;
+      let n = 1 + o;
       if (m == cantidad) {
         console.log("funcion send (Espera)");
-        m = 0;
-        sleepES5(espera);
-      } else {
-        console.log("funcion send (Tiempo)");
-        const fraseAleatoria = obtenerFraseAleatoria();
-        const phone = code + nameItem + "@c.us";
-        const mensaje = message + " " + fraseAleatoria;
         // messageSend(cliente, phone, mensaje);
         console.log(cliente, phone, mensaje);
+        datosTabla(n, nameItem, cliente, phone, mensaje);
+        sleepES5(espera);
+        m = -1;
+      } else {
+        console.log("funcion send (Tiempo)");
+        //  messageSend(cliente, phone, mensaje);
+        console.log(cliente, phone, mensaje);
+        datosTabla(n, nameItem, cliente, phone, mensaje);
         sleepES5(tiempo);
       }
       m++;
@@ -186,6 +188,48 @@ function send() {
 }
 
 //--------------------------------------------
+//       Envio de mensajes, muestra de info y validacion
+//--------------------------------------------
+
+function datosTabla(n, celular, cliente, phone, mensaje) {
+  let tableBody = document.getElementById("tbody");
+  let estado;
+  let descripcion;
+  if (typeof celular == "number") {
+    let numeroComoCadena = celular.toString();
+    let cantidadDigitos = numeroComoCadena.length;
+
+    if (cantidadDigitos == 8) {
+      estado = `Enviado`;
+      descripcion = `El número es correcto.`;
+      messageSend(cliente, phone, mensaje);
+    } else if (cantidadDigitos > 8) {
+      estado = `El número es incorrecto. Tiene más de 8 dígitos.`;
+      descripcion = `El número es incorrecto. Tiene más de 8 dígitos.`;
+    } else {
+      estado = `El número es incorrecto. Tiene menos de 7 dígitos.`;
+      descripcion = `El número es incorrecto. Tiene menos de 7 dígitos.`;
+    }
+  } else {
+    estado = "no es un número.";
+  }
+  tableBody.innerHTML += `<tr>${
+    "<td>" +
+    n +
+    "</td>" +
+    "<td>" +
+    celular +
+    "</td>" +
+    "<td>" +
+    estado +
+    "</td>" +
+    "<td>" +
+    descripcion +
+    "</td>"
+  }</tr>`;
+}
+
+//--------------------------------------------
 //       Uso de botones
 //--------------------------------------------
 
@@ -198,7 +242,7 @@ document.getElementById("eliminar").addEventListener("click", function () {
   const eliminar = confirm("¿Esta seguro de eliminar la cuenta?");
   if (eliminar) {
     deleteLocalSession();
-    sleepES5(2000)
+    sleepES5(2000);
     ralert(
       "Cuenta eliminada \n Recuerde que al eliminar la cuenta tambien tendria que eliminarlo de su dispositivo vinculado"
     );
