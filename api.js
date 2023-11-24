@@ -3,7 +3,7 @@ const code = document.getElementById("qrcode");
 const rimraf = require("rimraf");
 const fs = require("fs");
 
-const SESSION_FOLDER_PATH = ".wwebjs_auth";
+  const SESSION_FOLDER_PATH = ".wwebjs_auth";
 async function startAPI() {
   let sessionData;
 
@@ -54,9 +54,9 @@ function logeo() {
     fs.mkdirSync(SESSION_FOLDER_PATH);
 }
 }
-function messageSend(cliente, contacto, mensaje) {
-  return cliente.sendMessage(contacto, mensaje);
-}
+  function messageSend(cliente, contacto, mensaje) {
+    return cliente.sendMessage(contacto, mensaje);
+  }
 
 // async function messageMedia(cliente) {
 //   const media = await MessageMedia.fromUrl(

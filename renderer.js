@@ -13,6 +13,7 @@ const { startAPI, messageSend, deleteLocalSession } = require("./api.js");
 const { updateOnlineStatus } = require("./status.js");
 const { ralert } = require("./refrescar.js");
 const XLSX = require("xlsx");
+const { sync } = require("rimraf");
 
 updateOnlineStatus();
 
@@ -141,58 +142,63 @@ can.addEventListener("input", function () {
 //       Inicio de Cliente y Recorrido del Array de Numeros
 //--------------------------------------------
 
-function envioMensaje(cliente) {
+function envioMensaje() {
   try {
     m = 0;
     o = 0;
-    allJSONObjects.forEach((objeto) => {
+    allJSONObjects.forEach(async (objeto) => {
+      const cliente = container.client;
+
       let nameItem = objeto[name_item];
       const fraseAleatoria = obtenerFraseAleatoria();
       const phone = code + nameItem + "@c.us";
       const mensaje = message + " " + fraseAleatoria;
       let n = 1 + o;
       if (m == cantidad) {
-        console.log("funcion send (Espera)");
-        //messageSend(cliente, phone, mensaje);
-        console.log(cliente, phone, mensaje);
-        datosTabla(n, nameItem, cliente, phone, mensaje);
-        sleepES5(espera);
+        setTimeout(function () {
+          console.log("funcion send (Espera)");
+          datosTabla(n, nameItem, cliente, phone, mensaje).then(() =>
+            console.log("Mensaje enviado")
+          );
+        }, espera);
+        espera += 3000;
         m = -1;
       } else {
-        console.log("funcion send (Tiempo)");
-        //messageSend(cliente, phone, mensaje);
-        console.log(cliente, phone, mensaje);
-        datosTabla(n, nameItem, cliente, phone, mensaje);
-        sleepES5(tiempo);
+        setTimeout(function () {
+          console.log("funcion send (Tiempo)");
+          datosTabla(n, nameItem, cliente, phone, mensaje).then(() =>
+            console.log("Mensaje enviado")
+          );
+        }, tiempo);
+
+        tiempo += 3000;
       }
       m++;
       o++;
     });
     if (o == allJSONObjects.length && allJSONObjects.length != 0) {
-      console.log("mensajes enviados");
+      alert("todos los mensajes enviados");
     }
   } catch (error) {
     console.log("Si llego a esto es un error ", error);
   }
 }
 
-function send() {
-  (async () => {
-    try {
-      const cliente = await startAPI();
-      console.log(cliente);
-      envioMensaje(cliente);
-    } catch (error) {
-      console.log("existe un error", error);
-    }
-  })();
+const container = {
+  client: null,
+};
+
+async function star() {
+  const client = await startAPI();
+  container.client = client; // Almacena el cliente en el contenedor
+  return client;
 }
 
 //--------------------------------------------
 //       Envio de mensajes, muestra de info y validacion
 //--------------------------------------------
 
-function datosTabla(n, celular, cliente, phone, mensaje) {
+async function datosTabla(n, celular, cliente, phone, mensaje) {
   let tableBody = document.getElementById("tbody");
   let estado;
   let descripcion;
@@ -203,7 +209,9 @@ function datosTabla(n, celular, cliente, phone, mensaje) {
     if (cantidadDigitos == 8) {
       estado = `Enviado`;
       descripcion = `El número es correcto.`;
-      // messageSend(cliente, phone, mensaje);
+      messageSend(cliente, phone, mensaje).then(() =>
+        console.log("Mensaje enviado")
+      );
     } else if (cantidadDigitos > 8) {
       estado = `No enviado`;
       descripcion = `El número es incorrecto. Tiene más de 8 dígitos.`;
@@ -235,7 +243,7 @@ function datosTabla(n, celular, cliente, phone, mensaje) {
 //--------------------------------------------
 
 document.getElementById("enviar").addEventListener("click", function () {
-  send();
+  envioMensaje();
   alert("iniciando mensajes");
 });
 
@@ -248,6 +256,9 @@ document.getElementById("eliminar").addEventListener("click", function () {
       "Cuenta eliminada \n Recuerde que al eliminar la cuenta tambien tendria que eliminarlo de su dispositivo vinculado"
     );
   }
+});
+document.getElementById("iniciar").addEventListener("click", function () {
+  star();
 });
 document.getElementById("generar").addEventListener("click", function () {
   startAPI();
