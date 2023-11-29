@@ -1,22 +1,22 @@
 //--------------------------------------------
 //       Referenciar contenidos
-//jugar con el tiempo                            |
+//jugar con el tiempo                            |/
 //las palabras ambos                             |X
 //pueden hacer de manera randomica               |/
 //mostrar la lista de envidados                  |X
 //validacion de numeros                          |X
-//hacer que se pueda editar fraces randomicas    |
-//actualizar pagina                              |
-//SE ECONTRO UN ERROR EL ENVIO ES DE INMEDIATO   |
+//hacer que se pueda editar fraces randomicas    |X
+//actualizar pagina                              |X
+//SE ECONTRO UN ERROR EL ENVIO ES DE INMEDIATO   |x
 //--------------------------------------------
 const { startAPI, messageSend, deleteLocalSession } = require("./api.js");
 const { updateOnlineStatus } = require("./status.js");
 const { ralert } = require("./refrescar.js");
 const XLSX = require("xlsx");
+const fs = require("fs");
 const { sync } = require("rimraf");
 
 updateOnlineStatus();
-
 //--------------------------------------------
 //       Excel a Json
 //--------------------------------------------
@@ -76,27 +76,86 @@ var sleepES5 = function (ms) {
   while (new Date().getTime() < esperarHasta) continue;
 };
 //--------------------------------------------
-//       Envio de Mensajes librerias de fraces
+//       Librerias de fraces
 //--------------------------------------------
 
-const frasesAleatorias = [
-  "Por favor, recuerde recoger su paquete en la agencia nacional de correos.",
-  "Estamos ansiosos por su llegada. Lo esperamos con entusiasmo.",
-  "Estaremos atentos a su llegada. No dude en pasar por nuestra oficina.",
-  "Su paquete está listo para ser recogido en la agencia. ¡Hasta pronto!",
-  "Le recordamos que su paquete le espera en la agencia nacional de correos.",
-  "Nos encantaría verlo pronto en nuestra agencia. Su paquete está listo.",
-  "Lo esperamos con gusto en la agencia de correos. Su paquete le aguarda.",
-  "Su paquete está seguro y listo para ser recogido. ¡No demore!",
-  "Asegúrese de recoger su encomienda en la agencia de mensajería nacional.",
-  "Estamos emocionados por su llegada. Le esperamos con anticipación.",
-  "Permaneceremos alerta a su llegada. No dude en visitar nuestras instalaciones.",
-  "Su paquete está preparado para ser retirado en la agencia. ¡Hasta pronto!",
-  "Le recordamos la disponibilidad de su paquete en la agencia de correos nacional.",
-  "Nos encantaría darle la bienvenida pronto en nuestra agencia. Su paquete está preparado.",
-  "Le esperamos con gusto en la agencia postal. Su paquete le aguarda.",
-  "Su paquete está resguardado y listo para ser retirado. ¡No demore!",
-];
+// Variable para almacenar las frases aleatorias
+let frasesAleatorias = [];
+
+// Función para cargar las frases al cargar la página
+function cargarFrases() {
+  const listaFrases = document.getElementById("lista-frases");
+  listaFrases.innerHTML = "";
+
+  frasesAleatorias.forEach((frase, index) => {
+    const li = document.createElement("li");
+    li.textContent = frase;
+    li.setAttribute("data-index", index);
+    li.addEventListener("click", seleccionarFrase);
+    listaFrases.appendChild(li);
+  });
+}
+
+// Función para agregar una nueva frase desde el textarea
+function agregarFrase() {
+  const nuevaFrase = document.getElementById("editor").value.trim();
+  if (nuevaFrase !== "") {
+    frasesAleatorias.push(nuevaFrase);
+    cargarFrases();
+    guardar();
+    document.getElementById("editor").value = "";
+  }
+}
+
+// Función para eliminar la frase seleccionada
+function eliminarFrase() {
+  const listaFrases = document.getElementById("lista-frases");
+  const seleccionado = listaFrases.querySelector(".seleccionado");
+
+  if (seleccionado) {
+    const index = parseInt(seleccionado.getAttribute("data-index"));
+    frasesAleatorias.splice(index, 1);
+    cargarFrases();
+    guardar();
+  }
+}
+
+// Función para marcar la frase seleccionada
+function seleccionarFrase(event) {
+  const listaFrases = document.getElementById("lista-frases");
+  const items = listaFrases.getElementsByTagName("li");
+
+  // Desmarcar todas las frases
+  Array.from(items).forEach((item) => {
+    item.classList.remove("seleccionado");
+  });
+
+  // Marcar la frase seleccionada
+  event.target.classList.add("seleccionado");
+}
+
+// Función para guardar las frases en un archivo (simulado)
+
+// Cargar las frases al cargar la página
+
+fs.readFile("frases.txt", "utf8", (err, data) => {
+  if (err) throw err;
+  frasesAleatorias = data.split("\n");
+  console.log("Contenido del archivo leído:", frasesAleatorias);
+});
+
+function guardar() {
+  console.log("Frases guardadas:", frasesAleatorias);
+  const contenido = frasesAleatorias.join("\n");
+  fs.writeFile("frases.txt", contenido, (err) => {
+    if (err) throw err;
+    console.log("Archivo frases.txt creado exitosamente");
+  });
+}
+
+fetch("frases.txt")
+  .then((response) => response.text())
+  .then((data) => (document.getElementById("lista-frases").value = data));
 
 //--------------------------------------------
 //       Envio de Mensajes variables
@@ -161,7 +220,7 @@ function envioMensaje() {
             console.log("Mensaje enviado")
           );
         }, espera);
-        espera += 3000;
+        espera += espera;
         m = -1;
       } else {
         setTimeout(function () {
@@ -171,12 +230,13 @@ function envioMensaje() {
           );
         }, tiempo);
 
-        tiempo += 3000;
+        tiempo += tiempo;
       }
+      console.log(n, nameItem, cliente, phone, mensaje, o);
       m++;
       o++;
     });
-    if (o == allJSONObjects.length && allJSONObjects.length != 0) {
+    if (o == allJSONObjects.length || allJSONObjects.length != 0) {
       alert("todos los mensajes enviados");
     }
   } catch (error) {
@@ -189,6 +249,7 @@ const container = {
 };
 
 async function star() {
+  console.log("estas son las fraces", frasesAleatorias);
   const client = await startAPI();
   container.client = client; // Almacena el cliente en el contenedor
   return client;
@@ -214,7 +275,7 @@ async function datosTabla(n, celular, cliente, phone, mensaje) {
       );
     } else if (cantidadDigitos > 8) {
       estado = `No enviado`;
-      descripcion = `El número es incorrecto. Tiene más de 8 dígitos.`;
+      descripcion = `El número es incorrecto. Ti  ene más de 8 dígitos.`;
     } else {
       estado = `No enviado`;
       descripcion = `El número es incorrecto. Tiene menos de 7 dígitos.`;
@@ -237,10 +298,19 @@ async function datosTabla(n, celular, cliente, phone, mensaje) {
     "</td>"
   }</tr>`;
 }
-
 //--------------------------------------------
 //       Uso de botones
 //--------------------------------------------
+document.getElementById("agregarFrase").addEventListener("click", function () {
+  agregarFrase();
+});
+
+document.getElementById("eliminarFrase").addEventListener("click", function () {
+  eliminarFrase();
+});
+document.getElementById("ver").addEventListener("click", function () {
+  cargarFrases();
+});
 
 document.getElementById("enviar").addEventListener("click", function () {
   envioMensaje();
@@ -257,8 +327,11 @@ document.getElementById("eliminar").addEventListener("click", function () {
     );
   }
 });
+
 document.getElementById("iniciar").addEventListener("click", function () {
+  console.log("imnicio de start");
   star();
+  cargarFrases();
 });
 document.getElementById("generar").addEventListener("click", function () {
   startAPI();

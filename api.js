@@ -3,10 +3,10 @@ const code = document.getElementById("qrcode");
 const rimraf = require("rimraf");
 const fs = require("fs");
 
-  const SESSION_FOLDER_PATH = ".wwebjs_auth";
+const SESSION_FOLDER_PATH = ".wwebjs_auth";
 async function startAPI() {
   let sessionData;
-
+  console.log("estra a estart qr");
   const client = new Client({
     session: sessionData,
     authStrategy: new LocalAuth(),
@@ -48,28 +48,22 @@ function deleteLocalSession() {
 }
 function logeo() {
   if (fs.existsSync(SESSION_FOLDER_PATH)) {
-    console.log('Sesión encontrada.');
-} else {
-    console.log('No se encontraron datos de sesión. Escanea el código QR para autenticar.');
+    console.log("Sesión encontrada.");
+  } else {
+    console.log(
+      "No se encontraron datos de sesión. Escanea el código QR para autenticar."
+    );
     fs.mkdirSync(SESSION_FOLDER_PATH);
-}
-}
-  function messageSend(cliente, contacto, mensaje) {
-    return cliente.sendMessage(contacto, mensaje);
   }
+}
+function messageSend(cliente, contacto, mensaje) {
+  return cliente.sendMessage(contacto, mensaje);
+}
 
-// async function messageMedia(cliente) {
-//   const media = await MessageMedia.fromUrl(
-//     "https://via.placeholder.com/350x150.png"
-//   );
-
-//   return cliente.sendMessage(media);
-// }
 logeo();
 
 module.exports = {
   startAPI,
   messageSend,
   deleteLocalSession,
-
 };

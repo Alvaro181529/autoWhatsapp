@@ -19,6 +19,11 @@
     <title>Automatizacion</title>
   </head>
   <body>
+    <style>
+      .seleccionado {
+        background-color: #aaf;
+      }
+    </style>
     <header>
       <h1>Connection status: <strong id="status"></strong></h1>
     </header>
@@ -28,7 +33,7 @@
       <hr />
       <h4>Aca estra el qr</h4>
       <div id="qrcode"></div>
-      <input type="button" id="generar" value="generar qr" />
+      <input type="button" id="iniciar" value="iniciar Cliente" />
       <hr />
       <section>
         <input type="file" name="excel" id="fileUpload" accept=".xls,.xlsx" />
@@ -41,10 +46,25 @@
       <hr />
       <article>
         <textarea
-          style="width: 60em; height: 10em"
+          cols="30"
+          rows="10"
           id="mensajetxt"
           placeholder="en aca se aceptan los mensajes"
         ></textarea>
+      </article>
+      <article>
+        <h5>Frases Aleatorias</h5>
+        <input
+        type="text"
+          id="editor"
+          rows="4"
+          cols="50"
+          placeholder="Ingrese una nueva frase"
+        ></input>
+        <button id="agregarFrase">Agregar Frase</button>
+        <button id="eliminarFrase">Eliminar Frase Seleccionada</button>
+        <button id="ver">VER</button>
+        <ul id="lista-frases"></ul>
       </article>
       <hr />
       <section>
@@ -52,40 +72,41 @@
           type="number"
           name="cantidad"
           id="cantidad"
+          min="0"
           placeholder="cantidad de mmensajes para enviar"
         />
         <input
           type="number"
           name="tiempo"
           id="tiempo"
+          min="0"
           placeholder="intervalo por tiempo de envio de mensajes"
         />
         <input
           type="number"
           name="cantidad"
           id="espera"
+          min="0"
           placeholder="por cada catidad cuanto tiempo espera"
         />
       </section>
       <hr />
-      <input type="button" id="iniciar" value="enviar" />
+    
       <input type="button" id="enviar" value="enviar" />
       <hr />
       <div id="divTabla">
         <table>
-            <thead>
-                <tr>
-                    <th>N</th>
-                    <th>Telefono</th>
-                    <th>Estado</th>
-                    <th>Descripción</th>
-                </tr>
-            </thead>
-            <tbody id="tbody">
-    
-            </tbody>
+          <thead>
+            <tr>
+              <th>N</th>
+              <th>Telefono</th>
+              <th>Estado</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
         </table>
-    </div>
+      </div>
     </main>
   </body>
 </html>
