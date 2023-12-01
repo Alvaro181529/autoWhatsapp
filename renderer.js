@@ -168,8 +168,6 @@ let espera;
 let cantidad;
 const code = "591";
 const can = document.getElementById("cantidad");
-const tiem = document.getElementById("tiempo");
-const esp = document.getElementById("espera");
 const men = document.getElementById("mensajetxt");
 
 //--------------------------------------------
@@ -185,14 +183,6 @@ men.addEventListener("input", function () {
   console.clear();
   console.log(message);
 });
-tiem.addEventListener("input", function () {
-  tiempo = tiem.value;
-  tiempo *= 1000;
-});
-esp.addEventListener("input", function () {
-  espera = esp.value;
-  espera *= 10000;
-});
 can.addEventListener("input", function () {
   cantidad = can.value;
 });
@@ -200,6 +190,13 @@ can.addEventListener("input", function () {
 //--------------------------------------------
 //       Inicio de Cliente y Recorrido del Array de Numeros
 //--------------------------------------------
+function times() {
+  tiempo = Math.floor(Math.random() * 30000) + 1000;
+  return tiempo;
+}function timesES() {
+  espera = Math.floor(Math.random() * 300000) + 60000;
+  return tiempo;
+}
 
 function envioMensaje() {
   try {
@@ -207,12 +204,14 @@ function envioMensaje() {
     o = 0;
     allJSONObjects.forEach(async (objeto) => {
       const cliente = container.client;
-
       let nameItem = objeto[name_item];
       const fraseAleatoria = obtenerFraseAleatoria();
       const phone = code + nameItem + "@c.us";
       const mensaje = message + " " + fraseAleatoria;
       let n = 1 + o;
+
+      const tiempo = times();
+      const espera = timesES();
       if (m == cantidad) {
         setTimeout(function () {
           console.log("funcion send (Espera)");
@@ -225,14 +224,14 @@ function envioMensaje() {
       } else {
         setTimeout(function () {
           console.log("funcion send (Tiempo)");
-          datosTabla(n, nameItem, cliente, phone, mensaje).then(() =>
+          datosTabla(n, nameItem, cliente, phone, mensaje, tiempo).then(() =>
             console.log("Mensaje enviado")
           );
         }, tiempo);
 
         tiempo += tiempo;
       }
-      console.log(n, nameItem, cliente, phone, mensaje, o);
+      console.log(n, nameItem, cliente, phone, mensaje, tiempo);
       m++;
       o++;
     });
@@ -259,7 +258,7 @@ async function star() {
 //       Envio de mensajes, muestra de info y validacion
 //--------------------------------------------
 
-async function datosTabla(n, celular, cliente, phone, mensaje) {
+async function datosTabla(n, celular, cliente, phone, mensaje, tiempo) {
   let tableBody = document.getElementById("tbody");
   let estado;
   let descripcion;
@@ -270,9 +269,7 @@ async function datosTabla(n, celular, cliente, phone, mensaje) {
     if (cantidadDigitos == 8) {
       estado = `Enviado`;
       descripcion = `El número es correcto.`;
-      messageSend(cliente, phone, mensaje).then(() =>
-        console.log("Mensaje enviado")
-      );
+      messageSend(cliente, phone, mensaje).then(() => console.log(tiempo));
     } else if (cantidadDigitos > 8) {
       estado = `No enviado`;
       descripcion = `El número es incorrecto. Ti  ene más de 8 dígitos.`;
@@ -295,6 +292,9 @@ async function datosTabla(n, celular, cliente, phone, mensaje) {
     "</td>" +
     "<td>" +
     descripcion +
+    "</td>" +
+    "<td>" +
+    tiempo +
     "</td>"
   }</tr>`;
 }
@@ -332,7 +332,4 @@ document.getElementById("iniciar").addEventListener("click", function () {
   console.log("imnicio de start");
   star();
   cargarFrases();
-});
-document.getElementById("generar").addEventListener("click", function () {
-  startAPI();
 });
