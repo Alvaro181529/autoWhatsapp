@@ -2,7 +2,7 @@ const { Client, LocalAuth } = require("whatsapp-web.js");
 const code = document.getElementById("qrcode");
 const rimraf = require("rimraf");
 const fs = require("fs");
-
+let status ;
 const SESSION_FOLDER_PATH = ".wwebjs_auth";
 async function startAPI() {
   let sessionData;
@@ -19,7 +19,7 @@ async function startAPI() {
       height: 256,
     });
   });
-  code.innerHTML= ""
+  code.innerHTML = "";
   client.on("authenticated", async (session) => {
     console.log("Autenticado exitosamente");
     if (session) {
@@ -36,6 +36,12 @@ async function startAPI() {
   });
   await client.initialize();
   code.innerHTML = "ya esta conectado";
+  client.on("message_ack", (msg, ack) => {
+    status = `Estado: ${ack}`;
+    console.log(status);
+
+    callStatus(status);
+  });
   return client;
 }
 // Función para eliminar la sesión local
@@ -57,12 +63,13 @@ function logeo() {
     fs.mkdirSync(SESSION_FOLDER_PATH);
   }
 }
+function callStatus(status) {
+  console.log(status);
+  return status;
+}
 function messageSend(cliente, contacto, mensaje) {
   return cliente.sendMessage(contacto, mensaje);
-} 
-// client.on('message_ack', (message, ack) => {
-//   console.log('Estado ' + ack);
-// });
+}
 
 logeo();
 
@@ -70,4 +77,5 @@ module.exports = {
   startAPI,
   messageSend,
   deleteLocalSession,
+  callStatus,
 };

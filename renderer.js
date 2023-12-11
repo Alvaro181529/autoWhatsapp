@@ -9,7 +9,7 @@
 //actualizar pagina                              |X
 //SE ECONTRO UN ERROR EL ENVIO ES DE INMEDIATO   |x
 //--------------------------------------------
-const { startAPI, messageSend, deleteLocalSession } = require("./api.js");
+const { startAPI, messageSend, deleteLocalSession, callStatus } = require("./api.js");
 const { updateOnlineStatus } = require("./status.js");
 const { ralert } = require("./refrescar.js");
 const XLSX = require("xlsx");
@@ -264,6 +264,7 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo) {
   let tableBody = document.getElementById("tbody");
   let estado;
   let descripcion;
+  let status = callStatus();
   if (typeof celular == "number") {
     let numeroComoCadena = celular.toString();
     let cantidadDigitos = numeroComoCadena.length;
@@ -271,11 +272,12 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo) {
     if (cantidadDigitos == 8) {
       estado = `Enviado`;
       descripcion = `El número es correcto.`;
-      messageSend(cliente, phone, mensaje).then(() => {
-        if (n == allJSONObjects.length) {
-          alert("se enviaron los mensajes");
-        }
-      });
+      // messageSend(cliente, phone, mensaje).then(() => {
+      //   if (n == allJSONObjects.length) {
+      //     alert("se enviaron los mensajes");
+      //   }
+      // });
+      
       // client.on("message_ack", (message, ack) => {
       //   console.log("Mensaje " + message.id);
       //   console.log("Estado " + ack);
@@ -299,6 +301,9 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo) {
     "</td>" +
     "<td>" +
     estado +
+    "</td>" +
+    "<td>" +
+    status +
     "</td>" +
     "<td>" +
     descripcion +
