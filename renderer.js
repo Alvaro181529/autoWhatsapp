@@ -220,8 +220,8 @@ function envioMensaje() {
       if (m == cantidad) {
         setTimeout(function () {
           console.log("funcion send (Espera)");
-          datosTabla(n, nameItem, cliente, phone, mensaje, tiempo).then(() =>
-            n++
+          datosTabla(n, nameItem, cliente, phone, mensaje, tiempo).then(
+            () => n++
           );
         }, espera);
         espera += espera;
@@ -229,8 +229,8 @@ function envioMensaje() {
       } else {
         setTimeout(function () {
           console.log("funcion send (Tiempo)");
-          datosTabla(n, nameItem, cliente, phone, mensaje, tiempo).then(() =>
-            n++
+          datosTabla(n, nameItem, cliente, phone, mensaje, tiempo).then(
+            () => n++
           );
         }, tiempo);
 
@@ -273,10 +273,13 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo) {
       descripcion = `El número es correcto.`;
       messageSend(cliente, phone, mensaje).then(() => {
         if (n == allJSONObjects.length) {
-          alert("se enviaron los mensajes")
+          alert("se enviaron los mensajes");
         }
-      }
-      );
+      });
+      // client.on("message_ack", (message, ack) => {
+      //   console.log("Mensaje " + message.id);
+      //   console.log("Estado " + ack);
+      // });
     } else if (cantidadDigitos > 8) {
       estado = `No enviado`;
       descripcion = `El número es incorrecto. Ti  ene más de 8 dígitos.`;
@@ -287,7 +290,8 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo) {
   } else {
     estado = "No es un número.";
   }
-  tableBody.innerHTML += `<tr>${"<td>" +
+  tableBody.innerHTML += `<tr>${
+    "<td>" +
     n +
     "</td>" +
     "<td>" +
@@ -300,9 +304,9 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo) {
     descripcion +
     "</td>" +
     "<td>" +
-    tiempo +
+    tiempo / 10000 +
     " seg</td>"
-    }</tr>`;
+  }</tr>`;
 }
 //--------------------------------------------
 //       Uso de botones

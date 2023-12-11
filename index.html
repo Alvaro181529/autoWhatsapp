@@ -7,6 +7,7 @@
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com ;" />
   <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="boot.css">
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
     integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -21,7 +22,7 @@
       background-color: #aaf;
     }
   </style>
-  <header class="navbar bg-body-tertiary p-2">
+  <header class="navbar bg-light p-2">
     <h1>Connection status: <strong id="status"></strong></h1>
     <input class="btn btn-outline-danger" type="button" id="eliminar" value="Cerrar Sesion" />
   </header>
@@ -53,7 +54,7 @@
               <th>Telefono</th>
               <th>Estado</th>
               <th>Descripción</th>
-              <th>tiempo</th>
+              <th>Tiempo</th>
             </tr>
           </thead>
           <tbody id="tbody"></tbody>

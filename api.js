@@ -19,6 +19,7 @@ async function startAPI() {
       height: 256,
     });
   });
+  code.innerHTML= ""
   client.on("authenticated", async (session) => {
     console.log("Autenticado exitosamente");
     if (session) {
@@ -58,7 +59,10 @@ function logeo() {
 }
 function messageSend(cliente, contacto, mensaje) {
   return cliente.sendMessage(contacto, mensaje);
-}
+} 
+// client.on('message_ack', (message, ack) => {
+//   console.log('Estado ' + ack);
+// });
 
 logeo();
 
