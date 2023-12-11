@@ -185,39 +185,43 @@ men.addEventListener("input", function () {
   console.clear();
   console.log(message);
 });
-tiem.addEventListener("input", function () {
-  tiempo = tiem.value;
-  tiempo *= 1000;
-});
-esp.addEventListener("input", function () {
-  espera = esp.value;
-  espera *= 10000;
-});
-can.addEventListener("input", function () {
-  cantidad = can.value;
-});
+
+function espTiem() {
+  tiempo = Math.floor((300000 - 100000) * Math.random() + 10000);
+  return tiempo;
+}
+
+function espEsp() {
+  espera = Math.floor((150000 - 90000) * Math.random() + 100000);
+}
+function espCan() {
+  cantidad = Math.floor(Math.random() * (40 - 20) + 20);
+  return cantidad;
+}
 
 //--------------------------------------------
 //       Inicio de Cliente y Recorrido del Array de Numeros
 //--------------------------------------------
-
+cantidad = espCan();
 function envioMensaje() {
   try {
     m = 0;
     o = 0;
+    let n = 1;
     allJSONObjects.forEach(async (objeto) => {
       const cliente = container.client;
-
       let nameItem = objeto[name_item];
+      let tiempo = espTiem();
+      espEsp();
+
       const fraseAleatoria = obtenerFraseAleatoria();
       const phone = code + nameItem + "@c.us";
       const mensaje = message + " " + fraseAleatoria;
-      let n = 1 + o;
       if (m == cantidad) {
         setTimeout(function () {
           console.log("funcion send (Espera)");
-          datosTabla(n, nameItem, cliente, phone, mensaje).then(() =>
-            console.log("Mensaje enviado")
+          datosTabla(n, nameItem, cliente, phone, mensaje, tiempo).then(() =>
+            n++
           );
         }, espera);
         espera += espera;
@@ -225,8 +229,8 @@ function envioMensaje() {
       } else {
         setTimeout(function () {
           console.log("funcion send (Tiempo)");
-          datosTabla(n, nameItem, cliente, phone, mensaje).then(() =>
-            console.log("Mensaje enviado")
+          datosTabla(n, nameItem, cliente, phone, mensaje, tiempo).then(() =>
+            n++
           );
         }, tiempo);
 
@@ -236,9 +240,6 @@ function envioMensaje() {
       m++;
       o++;
     });
-    if (o == allJSONObjects.length || allJSONObjects.length != 0) {
-      alert("todos los mensajes enviados");
-    }
   } catch (error) {
     console.log("Si llego a esto es un error ", error);
   }
@@ -259,7 +260,7 @@ async function star() {
 //       Envio de mensajes, muestra de info y validacion
 //--------------------------------------------
 
-async function datosTabla(n, celular, cliente, phone, mensaje) {
+async function datosTabla(n, celular, cliente, phone, mensaje, tiempo) {
   let tableBody = document.getElementById("tbody");
   let estado;
   let descripcion;
@@ -270,8 +271,11 @@ async function datosTabla(n, celular, cliente, phone, mensaje) {
     if (cantidadDigitos == 8) {
       estado = `Enviado`;
       descripcion = `El número es correcto.`;
-      messageSend(cliente, phone, mensaje).then(() =>
-        console.log("Mensaje enviado")
+      messageSend(cliente, phone, mensaje).then(() => {
+        if (n == allJSONObjects.length) {
+          alert("se enviaron los mensajes")
+        }
+      }
       );
     } else if (cantidadDigitos > 8) {
       estado = `No enviado`;
@@ -283,8 +287,7 @@ async function datosTabla(n, celular, cliente, phone, mensaje) {
   } else {
     estado = "No es un número.";
   }
-  tableBody.innerHTML += `<tr>${
-    "<td>" +
+  tableBody.innerHTML += `<tr>${"<td>" +
     n +
     "</td>" +
     "<td>" +
@@ -295,8 +298,11 @@ async function datosTabla(n, celular, cliente, phone, mensaje) {
     "</td>" +
     "<td>" +
     descripcion +
-    "</td>"
-  }</tr>`;
+    "</td>" +
+    "<td>" +
+    tiempo +
+    " seg</td>"
+    }</tr>`;
 }
 //--------------------------------------------
 //       Uso de botones
@@ -332,7 +338,4 @@ document.getElementById("iniciar").addEventListener("click", function () {
   console.log("imnicio de start");
   star();
   cargarFrases();
-});
-document.getElementById("generar").addEventListener("click", function () {
-  startAPI();
 });

@@ -17,6 +17,7 @@
     "extends": "standard"
   },
   "dependencies": {
+    "bootstrap": "^5.3.2",
     "electron-better-ipc": "^2.0.1",
     "electron-online": "^1.0.0",
     "node": "^21.1.0",
