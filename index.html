@@ -26,7 +26,7 @@
     <h1>Connection status: <strong id="status"></strong></h1>
     <input class="btn btn-outline-danger" type="button" id="eliminar" value="Cerrar Sesion" />
   </header>
-  <input type="button" id="iniciar" value="iniciar" />
+  <input class="btn btn-secondary" type="button" id="iniciar" value="INICIAR" />
   <div id="overlay">
     <div class="spinner"></div>
   </div>
@@ -42,7 +42,7 @@
       <hr />
       <article>
         <div class="form-floating mb-3">
-          <textarea class="form-control" cols="80" rows="2" id="mensajetxt"
+          <textarea class="form-control" cols="80" rows="4" id="mensajetxt"
             placeholder="en aca se aceptan los mensajes"></textarea>
           <label for="mensajetxt">Comments</label>
         </div>
@@ -72,11 +72,10 @@
         <section class="input-group mb-3">
           <input type="text" id="editor" class="form-control" placeholder="Ingrese una nueva frase"></input>
           <button class="btn btn-outline-primary" id="agregarFrase">Agregar Frase</button>
-          <button class="btn btn-outline-warning" id="eliminarFrase">Eliminar Frase Seleccionada</button>
+          <button class="btn btn-outline-danger" id="eliminarFrase">Eliminar Frase</button>
         </section>
         <ul id="lista-frases" class="list-group"></ul>
-
-      </article>
+        </article>
     </div>
     </div>
 
