@@ -1,8 +1,9 @@
 //--------------------------------------------
 //       Referenciar contenidos
-//jugar con el tiempo                            |/
+//leer recibido y enviado                        |x
+//jugar con el tiempo                            |x
 //las palabras ambos                             |X
-//pueden hacer de manera randomica               |/
+//pueden hacer de manera randomica               |X
 //mostrar la lista de envidados                  |X
 //validacion de numeros                          |X
 //hacer que se pueda editar fraces randomicas    |X
@@ -167,9 +168,6 @@ let tiempo;
 let espera;
 let cantidad;
 const code = "591";
-const can = document.getElementById("cantidad");
-const tiem = document.getElementById("tiempo");
-const esp = document.getElementById("espera");
 const men = document.getElementById("mensajetxt");
 
 //--------------------------------------------
@@ -213,30 +211,32 @@ function envioMensaje() {
       let nameItem = objeto[name_item];
       let tiempo = espTiem();
       espEsp();
-
       const fraseAleatoria = obtenerFraseAleatoria();
       const phone = code + nameItem + "@c.us";
       const mensaje = message + " " + fraseAleatoria;
       if (m == cantidad) {
         setTimeout(function () {
+          let status = callStatus();
           console.log("funcion send (Espera)");
-          datosTabla(n, nameItem, cliente, phone, mensaje, tiempo).then(
+          datosTabla(n, nameItem, cliente, phone, mensaje, tiempo, status).then(
             () => n++
           );
         }, espera);
         espera += espera;
         m = -1;
       } else {
+
         setTimeout(function () {
+          let status = callStatus();
           console.log("funcion send (Tiempo)");
-          datosTabla(n, nameItem, cliente, phone, mensaje, tiempo).then(
+          datosTabla(n, nameItem, cliente, phone, mensaje, tiempo, status).then(
             () => n++
           );
         }, tiempo);
-
         tiempo += tiempo;
       }
       console.log(n, nameItem, cliente, phone, mensaje, o);
+
       m++;
       o++;
     });
@@ -260,28 +260,31 @@ async function star() {
 //       Envio de mensajes, muestra de info y validacion
 //--------------------------------------------
 
-async function datosTabla(n, celular, cliente, phone, mensaje, tiempo) {
+async function datosTabla(n, celular, cliente, phone, mensaje, tiempo, status) {
   let tableBody = document.getElementById("tbody");
   let estado;
   let descripcion;
-  let status = callStatus();
   if (typeof celular == "number") {
     let numeroComoCadena = celular.toString();
+    let primerNumero = numeroComoCadena[0];
     let cantidadDigitos = numeroComoCadena.length;
+    if (cantidadDigitos == 8 && primerNumero == 7 || primerNumero == 8 || primerNumero == 6) {
+      if (status == 3) {
+        estado = `Leido`;
 
-    if (cantidadDigitos == 8) {
-      estado = `Enviado`;
+      } else if (status == 2) {
+        estado = `Recibido`;
+
+      } else if (status == 1 || status == "undefined" || status == undefined || status != 1) {
+        estado = `Enviado`;
+
+      }
       descripcion = `El número es correcto.`;
-      // messageSend(cliente, phone, mensaje).then(() => {
-      //   if (n == allJSONObjects.length) {
-      //     alert("se enviaron los mensajes");
-      //   }
-      // });
-      
-      // client.on("message_ack", (message, ack) => {
-      //   console.log("Mensaje " + message.id);
-      //   console.log("Estado " + ack);
-      // });
+      messageSend(cliente, phone, mensaje).then(() => {
+        if (n == allJSONObjects.length) {
+          alert("se enviaron los mensajes");
+        }
+      });
     } else if (cantidadDigitos > 8) {
       estado = `No enviado`;
       descripcion = `El número es incorrecto. Ti  ene más de 8 dígitos.`;
@@ -292,8 +295,7 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo) {
   } else {
     estado = "No es un número.";
   }
-  tableBody.innerHTML += `<tr>${
-    "<td>" +
+  tableBody.innerHTML += `<tr>${"<td>" +
     n +
     "</td>" +
     "<td>" +
@@ -303,15 +305,12 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo) {
     estado +
     "</td>" +
     "<td>" +
-    status +
-    "</td>" +
-    "<td>" +
     descripcion +
     "</td>" +
     "<td>" +
     tiempo / 10000 +
     " seg</td>"
-  }</tr>`;
+    }</tr>`;
 }
 //--------------------------------------------
 //       Uso de botones
@@ -322,9 +321,6 @@ document.getElementById("agregarFrase").addEventListener("click", function () {
 
 document.getElementById("eliminarFrase").addEventListener("click", function () {
   eliminarFrase();
-});
-document.getElementById("ver").addEventListener("click", function () {
-  cargarFrases();
 });
 
 document.getElementById("enviar").addEventListener("click", function () {

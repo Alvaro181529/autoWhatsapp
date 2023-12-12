@@ -2,7 +2,7 @@ const { Client, LocalAuth } = require("whatsapp-web.js");
 const code = document.getElementById("qrcode");
 const rimraf = require("rimraf");
 const fs = require("fs");
-let status ;
+let status;
 const SESSION_FOLDER_PATH = ".wwebjs_auth";
 async function startAPI() {
   let sessionData;
@@ -37,11 +37,9 @@ async function startAPI() {
   await client.initialize();
   code.innerHTML = "ya esta conectado";
   client.on("message_ack", (msg, ack) => {
-    status = `Estado: ${ack}`;
-    console.log(status);
-
-    callStatus(status);
+    status = ack;
   });
+
   return client;
 }
 // Función para eliminar la sesión local
@@ -63,7 +61,8 @@ function logeo() {
     fs.mkdirSync(SESSION_FOLDER_PATH);
   }
 }
-function callStatus(status) {
+function callStatus() {
+  status = status;
   console.log(status);
   return status;
 }

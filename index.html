@@ -7,7 +7,7 @@
   <meta http-equiv="Content-Security-Policy"
     content="default-src 'self' 'unsafe-inline' 'unsafe-eval'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com ;" />
   <link rel="stylesheet" href="index.css">
-  <link rel="stylesheet" href="boot.css">
+  <!-- <link rel="stylesheet" href="boot.css"> -->
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
     integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -16,7 +16,7 @@
   <title>Automatizacion</title>
 </head>
 
-<body>
+<body class="container-fluid">
   <style>
     .seleccionado {
       background-color: #aaf;
@@ -54,7 +54,6 @@
               <th>#</th>
               <th>Telefono</th>
               <th>Estado</th>
-              <th>Estatus</th>
               <th>Descripción</th>
               <th>Tiempo</th>
             </tr>
@@ -69,7 +68,6 @@
         <input type="text" id="editor" rows="4" cols="50" placeholder="Ingrese una nueva frase"></input>
         <button id="agregarFrase">Agregar Frase</button>
         <button id="eliminarFrase">Eliminar Frase Seleccionada</button>
-        <button id="ver">VER</button>
         <ul id="lista-frases"></ul>
       </article>
 
