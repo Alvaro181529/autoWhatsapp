@@ -302,9 +302,9 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo, status) {
         if (n == allJSONObjects.length) {
           alert("se enviaron los mensajes");
           document.getElementById("resultados-envio").innerHTML =
-            +" total enviados " + enviados;
+            " total enviados " + enviados;
           document.getElementById("resultados-rechazado").innerHTML =
-            " total rechazados" + rechazados;
+            " total rechazados " + rechazados;
         }
       });
     } else if (cantidadDigitos > 8) {
