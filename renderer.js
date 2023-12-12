@@ -310,11 +310,11 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo, status) {
     } else if (cantidadDigitos > 8) {
       rechazados++;
       estado = `No enviado`;
-      descripcion = `El número es incorrecto. Ti  ene más de 8 dígitos.`;
+      descripcion = `El número es incorrecto.`;
     } else {
       rechazados++;
       estado = `No enviado`;
-      descripcion = `El número es incorrecto. Tiene menos de 7 dígitos.`;
+      descripcion = `El número es incorrecto.`;
     }
   } else {
     rechazados++;
