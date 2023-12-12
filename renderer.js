@@ -300,7 +300,8 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo, status) {
       enviados++;
       messageSend(cliente, phone, mensaje).then(() => {
         if (n == allJSONObjects.length) {
-          alert("se enviaron los mensajes"+" total enviados" + enviados + " total rechazados" + rechazados);
+          alert("se enviaron los mensajes");
+          document.getElementById("resultados").innerHTML =" total enviados" + enviados + " total rechazados" + rechazados
         }
       });
     } else if (cantidadDigitos > 8) {
