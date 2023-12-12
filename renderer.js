@@ -9,9 +9,9 @@
 //hacer que se pueda editar fraces randomicas    |X
 //actualizar pagina                              |X
 //SE ECONTRO UN ERROR EL ENVIO ES DE INMEDIATO   |x
-//ejecutable   |
-//diseño   |
-//resumen de los enviados   |
+//ejecutable                                     |
+//diseño  agbc                                   |
+//resumen de los enviados                        |
 //--------------------------------------------
 const {
   startAPI,
@@ -301,7 +301,10 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo, status) {
       messageSend(cliente, phone, mensaje).then(() => {
         if (n == allJSONObjects.length) {
           alert("se enviaron los mensajes");
-          document.getElementById("resultados").innerHTML =" total enviados" + enviados + " total rechazados" + rechazados
+          document.getElementById("resultados-envio").innerHTML =
+            +" total enviados " + enviados;
+          document.getElementById("resultados-rechazado").innerHTML =
+            " total rechazados" + rechazados;
         }
       });
     } else if (cantidadDigitos > 8) {
