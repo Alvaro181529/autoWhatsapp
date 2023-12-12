@@ -9,8 +9,16 @@
 //hacer que se pueda editar fraces randomicas    |X
 //actualizar pagina                              |X
 //SE ECONTRO UN ERROR EL ENVIO ES DE INMEDIATO   |x
+//ejecutable   |
+//diseño   |
+//resumen de los enviados   |
 //--------------------------------------------
-const { startAPI, messageSend, deleteLocalSession, callStatus } = require("./api.js");
+const {
+  startAPI,
+  messageSend,
+  deleteLocalSession,
+  callStatus,
+} = require("./api.js");
 const { updateOnlineStatus } = require("./status.js");
 const { ralert } = require("./refrescar.js");
 const XLSX = require("xlsx");
@@ -163,6 +171,8 @@ fetch("frases.txt")
 //--------------------------------------------
 let m;
 let o;
+let enviados = 0;
+let rechazados = 0;
 let message = "";
 let tiempo;
 let espera;
@@ -208,6 +218,7 @@ function envioMensaje() {
     let n = 1;
     allJSONObjects.forEach(async (objeto) => {
       const cliente = container.client;
+      // const cliente = " container.client";
       let nameItem = objeto[name_item];
       let tiempo = espTiem();
       espEsp();
@@ -225,7 +236,6 @@ function envioMensaje() {
         espera += espera;
         m = -1;
       } else {
-
         setTimeout(function () {
           let status = callStatus();
           console.log("funcion send (Tiempo)");
@@ -264,38 +274,50 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo, status) {
   let tableBody = document.getElementById("tbody");
   let estado;
   let descripcion;
+
   if (typeof celular == "number") {
     let numeroComoCadena = celular.toString();
     let primerNumero = numeroComoCadena[0];
     let cantidadDigitos = numeroComoCadena.length;
-    if (cantidadDigitos == 8 && primerNumero == 7 || primerNumero == 8 || primerNumero == 6) {
+    if (
+      (cantidadDigitos == 8 && primerNumero == 7) ||
+      primerNumero == 8 ||
+      primerNumero == 6
+    ) {
       if (status == 3) {
         estado = `Leido`;
-
       } else if (status == 2) {
         estado = `Recibido`;
-
-      } else if (status == 1 || status == "undefined" || status == undefined || status != 1) {
+      } else if (
+        status == 1 ||
+        status == "undefined" ||
+        status == undefined ||
+        status != 1
+      ) {
         estado = `Enviado`;
-
       }
       descripcion = `El número es correcto.`;
+      enviados++;
       messageSend(cliente, phone, mensaje).then(() => {
         if (n == allJSONObjects.length) {
-          alert("se enviaron los mensajes");
+          alert("se enviaron los mensajes"+" total enviados" + enviados + " total rechazados" + rechazados);
         }
       });
     } else if (cantidadDigitos > 8) {
+      rechazados++;
       estado = `No enviado`;
       descripcion = `El número es incorrecto. Ti  ene más de 8 dígitos.`;
     } else {
+      rechazados++;
       estado = `No enviado`;
       descripcion = `El número es incorrecto. Tiene menos de 7 dígitos.`;
     }
   } else {
+    rechazados++;
     estado = "No es un número.";
   }
-  tableBody.innerHTML += `<tr>${"<td>" +
+  tableBody.innerHTML += `<tr>${
+    "<td>" +
     n +
     "</td>" +
     "<td>" +
@@ -310,7 +332,7 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo, status) {
     "<td>" +
     tiempo / 10000 +
     " seg</td>"
-    }</tr>`;
+  }</tr>`;
 }
 //--------------------------------------------
 //       Uso de botones
@@ -344,13 +366,13 @@ document.getElementById("iniciar").addEventListener("click", function () {
   star();
   cargarFrases();
   // Oculta el botón y muestra el spinner
-  this.style.display = 'none';
-  document.getElementById('overlay').style.display = 'flex';
+  this.style.display = "none";
+  document.getElementById("overlay").style.display = "flex";
 
   // Simula la carga de elementos después de 10 segundos
   setTimeout(function () {
     // Agrega la clase oculto para ocultar los elementos
-    document.getElementById('overlay').style.display = 'none';
-    document.getElementById('elementos').classList.remove('oculto');
+    document.getElementById("overlay").style.display = "none";
+    document.getElementById("elementos").classList.remove("oculto");
   }, 15000); // 10000 milisegundos = 10 segundos
 });

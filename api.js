@@ -11,6 +11,7 @@ async function startAPI() {
     session: sessionData,
     authStrategy: new LocalAuth(),
   });
+  code.innerHTML = "";
 
   client.on("qr", (qr) => {
     new QRCode(code, {
@@ -19,7 +20,6 @@ async function startAPI() {
       height: 256,
     });
   });
-  code.innerHTML = "";
   client.on("authenticated", async (session) => {
     console.log("Autenticado exitosamente");
     if (session) {
@@ -67,7 +67,11 @@ function callStatus() {
   return status;
 }
 function messageSend(cliente, contacto, mensaje) {
-  return cliente.sendMessage(contacto, mensaje);
+  try {
+    return cliente.sendMessage(contacto, mensaje);
+  } catch (error) {
+    alert("ES POSIBLE QUE TE HAYAN BANEADO ;-;");
+  }
 }
 
 logeo();
