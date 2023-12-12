@@ -26,29 +26,32 @@
     <h1>Connection status: <strong id="status"></strong></h1>
     <input class="btn btn-outline-danger" type="button" id="eliminar" value="Cerrar Sesion" />
   </header>
-  <main class="p-4 row">
-
-
-
+  <input type="button" id="iniciar" value="iniciar" />
+  <div id="overlay">
+    <div class="spinner"></div>
+  </div>
+  <main class="p-4 ">
+    <div id="elementos"  class="oculto row">
     <div class="col-6">
       <div id="qrcode"></div>
-      <input type="button" id="iniciar" value="iniciar Cliente" />
-      <hr />
-      <section>
-        <input type="file" name="excel" id="fileUpload" accept=".xls,.xlsx" />
-        <button type="button" id="uploadExcel">Aceptar</button>
+      <section class="input-group">
+        <input type="file" class="form-control" name="excel" id="fileUpload" accept=".xls,.xlsx" />
+        <button type="button" class="btn btn-outline-success" id="uploadExcel">Aceptar</button>
         <a id="jsonData"></a>
       </section>
       <hr />
       <article>
-        <textarea cols="80" rows="2" id="mensajetxt" placeholder="en aca se aceptan los mensajes"></textarea>
-        <br />
-        <input type="button" id="enviar" value="enviar" />
+        <div class="form-floating mb-3">
+          <textarea class="form-control" cols="80" rows="2" id="mensajetxt"
+            placeholder="en aca se aceptan los mensajes"></textarea>
+          <label for="mensajetxt">Comments</label>
+        </div>
+        <input class="btn btn-outline-success" type="button" id="enviar" value="enviar" />
       </article>
       <hr />
       <h5 id="message-status"></h5>
       <div id="divTabla">
-        <table class="table table-borderless">
+        <table class="table table-borderless table-striped">
           <thead>
             <tr>
               <th>#</th>
@@ -62,15 +65,19 @@
         </table>
       </div>
     </div>
+
     <div class="col-6">
       <article>
         <h5>Frases Aleatorias</h5>
-        <input type="text" id="editor" rows="4" cols="50" placeholder="Ingrese una nueva frase"></input>
-        <button id="agregarFrase">Agregar Frase</button>
-        <button id="eliminarFrase">Eliminar Frase Seleccionada</button>
-        <ul id="lista-frases"></ul>
-      </article>
+        <section class="input-group mb-3">
+          <input type="text" id="editor" class="form-control" placeholder="Ingrese una nueva frase"></input>
+          <button class="btn btn-outline-primary" id="agregarFrase">Agregar Frase</button>
+          <button class="btn btn-outline-warning" id="eliminarFrase">Eliminar Frase Seleccionada</button>
+        </section>
+        <ul id="lista-frases" class="list-group"></ul>
 
+      </article>
+    </div>
     </div>
 
   </main>
