@@ -12,6 +12,7 @@
     integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script defer type="module" src="renderer.js"></script>
+  <script defer type="module" src="index.js"></script>
 
   <title>Automatizacion</title>
 </head>
@@ -31,57 +32,57 @@
     <div class="spinner"></div>
   </div>
   <main class="p-4 ">
-    <div id="elementos"  class="oculto row">
-    <div class="col-6">
-      <div id="qrcode"></div>
-      <section class="input-group">
-        <input type="file" class="form-control" name="excel" id="fileUpload" accept=".xls,.xlsx" />
-        <button type="button" class="btn btn-outline-success" id="uploadExcel">Aceptar</button>
-        <a id="jsonData"></a>
-      </section>
-      <hr />
-      <article>
-        <div class="form-floating mb-3">
-          <textarea class="form-control" cols="80" rows="4" id="mensajetxt"
-            placeholder="en aca se aceptan los mensajes"></textarea>
-          <label for="mensajetxt">Comments</label>
+    <div id="elementos" class="oculto row">
+      <div class="col-6">
+        <div id="qrcode"></div>
+        <section>
+          <div class="input-group">
+            <input type="file" class="form-control" name="excel" id="fileUpload" accept=".xls,.xlsx" />
+            <button type="button" class="btn btn-outline-success" id="uploadExcel">Aceptar</button>
+          </div>
+          <a id="jsonData"></a>
+        </section>
+        <hr />
+        <article>
+          <div class="form-floating mb-3">
+            <textarea class="form-control" cols="80" rows="4" id="mensajetxt"
+              placeholder="en aca se aceptan los mensajes"></textarea>
+            <label for="mensajetxt">Comments</label>
+          </div>
+          <input class="btn btn-outline-success" type="button" id="enviar" value="enviar" />
+        </article>
+        <hr />
+        <h5 id="message-status"></h5>
+        <div id="divTabla">
+          <table class="table table-borderless table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Telefono</th>
+                <th>Estado</th>
+                <th>Descripción</th>
+                <th>Tiempo</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+          <h5 class="alert alert-success" role="alert" id="resultados-envio"></h5>
+          <h5 class="alert alert-danger" role="alert" id="resultados-rechazado"></h5>
         </div>
-        <input class="btn btn-outline-success" type="button" id="enviar" value="enviar" />
-      </article>
-      <hr />
-      <h5 id="message-status"></h5>
-      <div id="divTabla">
-        <table class="table table-borderless table-striped">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Telefono</th>
-              <th>Estado</th>
-              <th>Descripción</th>
-              <th>Tiempo</th>
-            </tr>
-          </thead>
-          <tbody id="tbody"></tbody>
-        </table>
-        <h5 id="resultados-envio"></h5>
-      </br>
-        <h5 id="resultados-rechazado"></h5>
+      </div>
+
+      <div class="col-6">
+        <article>
+          <h5>Frases Aleatorias</h5>
+          <section class="input-group mb-3">
+            <input type="text" id="editor" class="form-control" placeholder="Ingrese una nueva frase"></input>
+            <button class="btn btn-outline-primary" id="agregarFrase">Agregar Frase</button>
+            <button class="btn btn-outline-danger" id="eliminarFrase">Eliminar Frase</button>
+          </section>
+          <ul id="lista-frases" class="list-group"></ul>
+        </article>
       </div>
     </div>
-
-    <div class="col-6">
-      <article>
-        <h5>Frases Aleatorias</h5>
-        <section class="input-group mb-3">
-          <input type="text" id="editor" class="form-control" placeholder="Ingrese una nueva frase"></input>
-          <button class="btn btn-outline-primary" id="agregarFrase">Agregar Frase</button>
-          <button class="btn btn-outline-danger" id="eliminarFrase">Eliminar Frase</button>
-        </section>
-        <ul id="lista-frases" class="list-group"></ul>
-        </article>
-    </div>
-    </div>
-
   </main>
 </body>
 

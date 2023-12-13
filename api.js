@@ -11,9 +11,9 @@ async function startAPI() {
     session: sessionData,
     authStrategy: new LocalAuth(),
   });
-  code.innerHTML = "";
 
   client.on("qr", (qr) => {
+  code.innerHTML = "";
     new QRCode(code, {
       text: qr,
       width: 256,
