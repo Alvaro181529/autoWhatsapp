@@ -7,3 +7,5 @@ node_modules
 .wwebjs_cache
 #Ignora la ruta package-lock.json
 package-lock.json
+# Ignora subir exe
+agbc-win32-x64

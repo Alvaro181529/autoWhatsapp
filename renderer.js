@@ -220,7 +220,7 @@ function envioMensaje() {
       const cliente = container.client;
       // const cliente = " container.client";
       let nameItem = objeto[name_item];
-      let tiempo = espTiem();
+      let tiempo = Math.floor((2000000 - 1000000) * Math.random() + 100000);
       espEsp();
       const fraseAleatoria = obtenerFraseAleatoria();
       const phone = code + nameItem + "@c.us";
