@@ -25,7 +25,7 @@
   </style>
   <header class="navbar bg-light p-2">
     <h1>Connection status: <strong id="status"></strong></h1>
-    <input class="btn btn-outline-danger" type="button" id="eliminar" value="Cerrar Sesion" />
+    <input class="btn btn-danger" type="button" id="eliminar" value="Cerrar Sesion" />
   </header>
   <input class="btn btn-secondary" type="button" id="iniciar" value="INICIAR" />
   <div id="overlay">
@@ -36,11 +36,11 @@
       <div class="col-6">
         <div id="qrcode"></div>
         <section>
-          <div class="input-group">
+          <div class="input-group mb-2" >
             <input type="file" class="form-control" name="excel" id="fileUpload" accept=".xls,.xlsx" />
-            <button type="button" class="btn btn-outline-success" id="uploadExcel">Aceptar</button>
+            <button type="button" class="btn btn-success" id="uploadExcel">Aceptar</button>
           </div>
-          <a id="jsonData"></a>
+          <h6 class="alert alert-primary" role="alert"  id="jsonData"></h6>
         </section>
         <hr />
         <article>
@@ -49,7 +49,7 @@
               placeholder="en aca se aceptan los mensajes"></textarea>
             <label for="mensajetxt">Comments</label>
           </div>
-          <input class="btn btn-outline-success" type="button" id="enviar" value="enviar" />
+          <input class="btn btn-success" type="button" id="enviar" value="enviar" />
         </article>
         <hr />
         <h5 id="message-status"></h5>
@@ -66,8 +66,14 @@
             </thead>
             <tbody id="tbody"></tbody>
           </table>
-          <h5 class="alert alert-success" role="alert" id="resultados-envio"></h5>
-          <h5 class="alert alert-danger" role="alert" id="resultados-rechazado"></h5>
+          <div class="row">
+            <div class="col-6">
+             <h5 class="alert alert-success" role="alert" id="resultados-envio"></h5>
+            </div>
+            <div class="col-6">
+            <h5 class="alert alert-danger" role="alert" id="resultados-rechazado"></h5>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -76,8 +82,8 @@
           <h5>Frases Aleatorias</h5>
           <section class="input-group mb-3">
             <input type="text" id="editor" class="form-control" placeholder="Ingrese una nueva frase"></input>
-            <button class="btn btn-outline-primary" id="agregarFrase">Agregar Frase</button>
-            <button class="btn btn-outline-danger" id="eliminarFrase">Eliminar Frase</button>
+            <button class="btn btn-primary" id="agregarFrase">Agregar Frase</button>
+            <button class="btn btn-danger" id="eliminarFrase">Eliminar Frase</button>
           </section>
           <ul id="lista-frases" class="list-group"></ul>
         </article>

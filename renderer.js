@@ -8,10 +8,10 @@
 //validacion de numeros                          |X
 //hacer que se pueda editar fraces randomicas    |X
 //actualizar pagina                              |X
-//SE ECONTRO UN ERROR EL ENVIO ES DE INMEDIATO   |x
+//SE ECONTRO UN ERROR EL ENVIO ES DE INMEDIATO   |X
 //ejecutable                                     |
 //diseño  agbc                                   |
-//resumen de los enviados                        |
+//resumen de los enviados                        |X
 //--------------------------------------------
 const {
   startAPI,
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         });
         document.getElementById("jsonData").innerHTML =
-          allJSONObjects.length + " numeros de contacto contactos";
+          allJSONObjects.length + " numeros de contacto contactos encontrados";
       };
       fileReader.readAsBinaryString(selectedFile);
     }
@@ -195,7 +195,7 @@ men.addEventListener("input", function () {
 });
 
 function espTiem() {
-  tiempo = Math.floor((300000 - 100000) * Math.random() + 10000);
+  tiempo = Math.floor((300000 - 100000) * Math.random() + 100000);
   return tiempo;
 }
 
@@ -220,7 +220,8 @@ function envioMensaje() {
       const cliente = container.client;
       // const cliente = " container.client";
       let nameItem = objeto[name_item];
-      let tiempo = espTiem();
+      tiempo = 0;
+      tiempo = espTiem();
       espEsp();
       const fraseAleatoria = obtenerFraseAleatoria();
       const phone = code + nameItem + "@c.us";
@@ -300,6 +301,7 @@ async function datosTabla(n, celular, cliente, phone, mensaje, tiempo, status) {
       enviados++;
       messageSend(cliente, phone, mensaje).then(() => {
         if (n == allJSONObjects.length) {
+          tableBody.innerHTML += `<tr>${"<td align='center' colspan='5'> MENSAJES FINALIZADOS</td>"}</tr>`;
           alert("se enviaron los mensajes");
           document.getElementById("resultados-envio").innerHTML =
             " total enviados " + enviados;
