@@ -15,6 +15,11 @@ li {
     border: var(--bs-list-group-border-width) solid var(--bs-list-group-border-color)
 }
 
+#session {
+    position: fixed;
+    display: flex;
+    z-index: 2;
+}
 
 #overlay {
     position: fixed;
@@ -49,13 +54,13 @@ li {
     }
 }
 
-#iniciar {
+.caja {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 25px;
-    padding: 20px;
+    padding: 50px;
     cursor: pointer;
     z-index: 2;
 }
@@ -65,6 +70,7 @@ li {
     left: 50%;
     z-index: 2;
 }
+
 .oculto {
     visibility: hidden;
-  }
+}

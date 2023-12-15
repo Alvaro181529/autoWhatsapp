@@ -13,11 +13,11 @@ async function startAPI() {
   });
 
   client.on("qr", (qr) => {
-  code.innerHTML = "";
+    code.innerHTML = "";
     new QRCode(code, {
       text: qr,
-      width: 256,
-      height: 256,
+      width: 400,
+      height: 400,
     });
   });
   client.on("authenticated", async (session) => {
@@ -34,8 +34,18 @@ async function startAPI() {
   client.on("ready", () => {
     console.log("cliente inicializado");
   });
-  await client.initialize();
-  code.innerHTML = "ya esta conectado";
+  await client.initialize().then(() => {
+    code.innerHTML = "conectado";
+  });
+  const texto = code.textContent;
+  const palabra = texto.includes("conectado");
+  if (palabra) {
+    console.log("La palabra 'oculto' se encuentra en el div.");
+    const botonCerrar = document.querySelector("#cerrar");
+    botonCerrar.click();
+  } else {
+    console.log("La palabra 'oculto' no se encuentra en el div.");
+  }
   client.on("message_ack", (msg, ack) => {
     status = ack;
   });
@@ -54,10 +64,13 @@ function deleteLocalSession() {
 function logeo() {
   if (fs.existsSync(SESSION_FOLDER_PATH)) {
     console.log("Sesión encontrada.");
+    document.getElementById("session").innerHTML = "Se encontro una session";
   } else {
     console.log(
       "No se encontraron datos de sesión. Escanea el código QR para autenticar."
     );
+    document.getElementById("session").innerHTML = "No se encontro una session"
+
     fs.mkdirSync(SESSION_FOLDER_PATH);
   }
 }

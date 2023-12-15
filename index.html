@@ -12,7 +12,7 @@
     integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script defer type="module" src="renderer.js"></script>
-  <script defer type="module" src="index.js"></script>
+  <script defer type="module" src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
 
   <title>Automatizacion</title>
 </head>
@@ -25,22 +25,42 @@
   </style>
   <header class="navbar bg-light p-2">
     <h1>Connection status: <strong id="status"></strong></h1>
-    <input class="btn btn-danger" type="button" id="eliminar" value="Cerrar Sesion" />
   </header>
-  <input class="btn btn-secondary" type="button" id="iniciar" value="INICIAR" />
+  <h3 id="session" style="color: white;"></h3>
+
+  <section class="caja">
+    <input class="btn btn-secondary btn-lg" type="button" id="iniciar" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+      value="INICIAR" />
+    <input class="btn btn-danger btn-lg" type="button" id="eliminar" value="Cerrar Sesion" />
+  </section>
+
   <div id="overlay">
     <div class="spinner"></div>
   </div>
   <main class="p-4 ">
     <div id="elementos" class="oculto row">
+      <!-- Modal -->
+      <div class="modal" id="staticBackdrop" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Validacion</h1>
+              <button type="button" class="btn btn-secondary" id="cerrar" data-bs-dismiss="modal">Close</button>
+            </div>
+            <div class="modal-body" align="center">
+              <h2 class="m-2" id="qrcode"></h2>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="col-6">
-        <div id="qrcode"></div>
         <section>
-          <div class="input-group mb-2" >
+          <div class="input-group mb-2">
             <input type="file" class="form-control" name="excel" id="fileUpload" accept=".xls,.xlsx" />
             <button type="button" class="btn btn-success" id="uploadExcel">Aceptar</button>
           </div>
-          <h6 class="alert alert-primary" role="alert"  id="jsonData"></h6>
+          <h6 class="alert alert-primary" role="alert" id="jsonData"></h6>
         </section>
         <hr />
         <article>
@@ -68,10 +88,10 @@
           </table>
           <div class="row">
             <div class="col-6">
-             <h5 class="alert alert-success" role="alert" id="resultados-envio"></h5>
+              <h5 class="alert alert-success" role="alert" id="resultados-envio"></h5>
             </div>
             <div class="col-6">
-            <h5 class="alert alert-danger" role="alert" id="resultados-rechazado"></h5>
+              <h5 class="alert alert-danger" role="alert" id="resultados-rechazado"></h5>
             </div>
           </div>
         </div>

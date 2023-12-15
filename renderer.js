@@ -20,7 +20,6 @@ const {
   callStatus,
 } = require("./api.js");
 const { updateOnlineStatus } = require("./status.js");
-const { ralert } = require("./refrescar.js");
 const XLSX = require("xlsx");
 const fs = require("fs");
 const { sync } = require("rimraf");
@@ -354,24 +353,26 @@ document.getElementById("enviar").addEventListener("click", function () {
   envioMensaje();
   alert("iniciando mensajes");
 });
-
-document.getElementById("eliminar").addEventListener("click", function () {
+const eliminar = document.getElementById("eliminar");
+eliminar.addEventListener("click", function () {
   const eliminar = confirm("¿Esta seguro de eliminar la cuenta?");
   if (eliminar) {
     deleteLocalSession();
     sleepES5(2000);
-    ralert(
+    alert(
       "Cuenta eliminada \n Recuerde que al eliminar la cuenta tambien tendria que eliminarlo de su dispositivo vinculado"
     );
+    iniciar.style.display = "none";
   }
 });
-
-document.getElementById("iniciar").addEventListener("click", function () {
+const iniciar = document.getElementById("iniciar");
+iniciar.addEventListener("click", function () {
   console.log("inicio de start");
   star();
   cargarFrases();
   // Oculta el botón y muestra el spinner
   this.style.display = "none";
+  eliminar.style.display = "none";
   document.getElementById("overlay").style.display = "flex";
 
   // Simula la carga de elementos después de 10 segundos
@@ -379,5 +380,5 @@ document.getElementById("iniciar").addEventListener("click", function () {
     // Agrega la clase oculto para ocultar los elementos
     document.getElementById("overlay").style.display = "none";
     document.getElementById("elementos").classList.remove("oculto");
-  }, 15000); // 10000 milisegundos = 10 segundos
+  }, 18000); // 10000 milisegundos = 10 segundos
 });

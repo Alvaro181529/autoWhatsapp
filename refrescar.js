@@ -1,6 +1,6 @@
 function ralert(contenido) {
   alert(contenido);
-  window.location.reload();
+  document.getElementById("iniciar").click()
 }
 module.exports = {
   ralert,
