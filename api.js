@@ -64,7 +64,7 @@ function deleteLocalSession() {
 function logeo() {
   if (fs.existsSync(SESSION_FOLDER_PATH)) {
     console.log("Sesión encontrada.");
-    document.getElementById("session").innerHTML = "Se encontro una session";
+    // document.getElementById("session").innerHTML = "Se encontro una session";
   } else {
     console.log(
       "No se encontraron datos de sesión. Escanea el código QR para autenticar."

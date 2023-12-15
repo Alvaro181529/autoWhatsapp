@@ -372,7 +372,6 @@ iniciar.addEventListener("click", function () {
   cargarFrases();
   // Oculta el botón y muestra el spinner
   this.style.display = "none";
-  eliminar.style.display = "none";
   document.getElementById("overlay").style.display = "flex";
 
   // Simula la carga de elementos después de 10 segundos

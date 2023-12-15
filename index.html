@@ -25,15 +25,11 @@
   </style>
   <header class="navbar bg-light p-2">
     <h1>Connection status: <strong id="status"></strong></h1>
+    <input class="btn btn-danger" type="button" id="eliminar" value="Cerrar Sesion" />
   </header>
-  <h3 id="session" style="color: white;"></h3>
-
-  <section class="caja">
-    <input class="btn btn-secondary btn-lg" type="button" id="iniciar" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+  <!-- <h3 id="session" style="color: white;"></h3> -->
+  <input class="btn btn-secondary btn-lg caja" type="button" id="iniciar" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
       value="INICIAR" />
-    <input class="btn btn-danger btn-lg" type="button" id="eliminar" value="Cerrar Sesion" />
-  </section>
-
   <div id="overlay">
     <div class="spinner"></div>
   </div>
